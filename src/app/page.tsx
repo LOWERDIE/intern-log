@@ -186,7 +186,7 @@ export default function Dashboard() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full glass-input rounded-xl px-4 py-3 text-white"
+                    className="w-full glass-input rounded-xl px-0 py-3 text-white"
                     required
                   />
                 </div>
