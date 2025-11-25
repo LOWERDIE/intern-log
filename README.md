@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 Internship Log
 
-## Getting Started
+A beautiful, modern web application for tracking and managing your internship daily logs. Built with Next.js 14, TypeScript, Firebase, and featuring a premium glassmorphism UI design.
 
-First, run the development server:
+![Internship Log Dashboard](/.github/preview.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- **🔐 Secure Authentication** - Email/Password login with Firebase Auth
+- **📊 Dual View Modes** - Switch between List and Table views
+- **🗑️ Bulk Operations** - Select multiple logs and delete with safety confirmation
+- **🔍 Log Details** - View full log details in a beautiful modal popup
+- **📥 Excel Export** - Export your logs to Excel format instantly
+- **🌐 Bilingual Support** - Thai and English language toggle
+- **📱 Fully Responsive** - Optimized for desktop, tablet, and mobile
+- **🎨 Premium UI** - Modern design with glassmorphism effects and smooth animations
+- **⚡ Real-time Sync** - Firebase Firestore for instant data synchronization
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Backend**: [Firebase](https://firebase.google.com/)
+  - Authentication
+  - Firestore Database
+- **Export**: [SheetJS (xlsx)](https://sheetjs.com/)
+- **Fonts**: [Noto Sans Thai](https://fonts.google.com/noto/specimen/Noto+Sans+Thai)
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- Firebase account and project
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/LOWERDIE/intern-log.git
+   cd intern-log
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Firebase**
+   
+   Create a `.env.local` file in the root directory:
+   ```env
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   ```
+
+4. **Set up Firebase**
+   - Enable Email/Password authentication in Firebase Console
+   - Create a Firestore database
+   - Update security rules (see [Deployment Guide](#deployment))
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📂 Project Structure
+
+```
+intern-log/
+├── src/
+│   ├── app/
+│   │   ├── login/          # Login page
+│   │   ├── page.tsx        # Dashboard page
+│   │   └── globals.css     # Global styles
+│   ├── components/
+│   │   ├── Navbar.tsx      # Navigation bar
+│   │   ├── LogTable.tsx    # Table view component
+│   │   ├── LogDetailsModal.tsx
+│   │   └── DeleteConfirmationModal.tsx
+│   ├── context/
+│   │   └── LanguageContext.tsx  # i18n context
+│   └── lib/
+│       └── firebase.ts     # Firebase configuration
+├── public/                 # Static assets
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Features Showcase
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Modern Login Page
+- Split-screen design with branding and form
+- Glassmorphism effect with animated background
+- Show/hide password toggle
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Dashboard
+- **New Entry Form** - Add date and description
+- **Recent Logs** - View all your logs in list or table format
+- **Search & Filter** - (Coming soon)
+- **Export to Excel** - Download logs as .xlsx file
 
-## Learn More
+### Security
+- User authentication required
+- Row-level security (each user sees only their logs)
+- Confirmation required before deletion
 
-To learn more about Next.js, take a look at the following resources:
+## 🌍 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deploy to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push your code to GitHub
+2. Import your repository on [Vercel](https://vercel.com)
+3. Add environment variables
+4. Deploy!
 
-## Deploy on Vercel
+### Firebase Production Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Update Firestore security rules:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /logs/{logId} {
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+  }
+}
+```
+
+For detailed deployment instructions, see the [Deployment Guide](/.github/deployment_guide.md).
+
+## 📝 Usage
+
+1. **Login** - Use your email and password
+2. **Add Entry** - Fill in the date and description, then click "Save Entry"
+3. **View Logs** - Switch between List and Table views
+4. **Select & Delete** - Check multiple logs and delete them with confirmation
+5. **Export** - Click "Export to Excel" to download your logs
+6. **Language** - Toggle between Thai (TH) and English (EN)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👨‍💻 Developer
+
+Created with ❤️ by [LOWERDIE](https://github.com/LOWERDIE)
+
+---
+
+**Note**: This is a personal project for internship log management. Feel free to fork and customize for your needs!
