@@ -2,8 +2,6 @@
 
 A beautiful, modern web application for tracking and managing your internship daily logs. Built with Next.js 14, TypeScript, Firebase, and featuring a premium glassmorphism UI design.
 
-![Internship Log Dashboard](/.github/preview.png)
-
 ## ✨ Features
 
 - **🔐 Secure Authentication** - Email/Password login with Firebase Auth
@@ -159,7 +157,7 @@ This project is licensed under the MIT License.
 ## 👨‍💻 Developer
 
 Created with ❤️ by [LOWERDIE](https://github.com/LOWERDIE)
-
+TS IS VIBECODING BRO 😭😭😭
 ---
 
 **Note**: This is a personal project for internship log management. Feel free to fork and customize for your needs!
