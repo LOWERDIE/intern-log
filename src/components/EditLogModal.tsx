@@ -15,7 +15,7 @@ interface EditLogModalProps {
     log: LogEntry | null;
     isOpen: boolean;
     onClose: () => void;
-    onSave: (id: string, date: string, description: string, hours: number) => Promise<void>;
+    onSave: (updatedLog: LogEntry) => Promise<void>;
 }
 
 export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps) {
@@ -39,7 +39,12 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
         e.preventDefault();
         setIsSaving(true);
         try {
-            await onSave(log.id, date, description, hours);
+            await onSave({
+                ...log,
+                date,
+                description,
+                hours
+            });
             onClose();
         } catch (error) {
             console.error("Failed to update log", error);
