@@ -108,6 +108,38 @@ const translations: Record<string, Record<Language, string>> = {
     'close': {
         'EN': 'Close',
         'TH': 'ปิด'
+    },
+    'edit_entry': {
+        'EN': 'Edit Entry',
+        'TH': 'แก้ไขบันทึก'
+    },
+    'save_changes': {
+        'EN': 'Save Changes',
+        'TH': 'บันทึกการแก้ไข'
+    },
+    'hours': {
+        'EN': 'Hours',
+        'TH': 'ชั่วโมง'
+    },
+    'hours_suffix': {
+        'EN': 'hrs',
+        'TH': 'ชม.'
+    },
+    'total_summary': {
+        'EN': 'Total Summary',
+        'TH': 'สรุปผลการฝึกงาน'
+    },
+    'days': {
+        'EN': 'Days',
+        'TH': 'วัน'
+    },
+    'months': {
+        'EN': 'Months',
+        'TH': 'เดือน'
+    },
+    'total_internship_time': {
+        'EN': 'Total Internship Time',
+        'TH': 'เวลาฝึกงานทั้งหมด'
     }
 };
 

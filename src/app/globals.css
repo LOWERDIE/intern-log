@@ -81,6 +81,12 @@ body {
   outline: none;
 }
 
+/* Calendar Icon Color Fix */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
 /* Modern Button */
 .btn-primary {
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
