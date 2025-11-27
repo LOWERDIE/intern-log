@@ -6,9 +6,13 @@ A beautiful, modern web application for tracking and managing your internship da
 
 - **🔐 Secure Authentication** - Email/Password login with Firebase Auth
 - **📊 Dual View Modes** - Switch between List and Table views
+- **🔗 Work Link Attachment** - Attach optional URLs to your work logs
+- **⏰ Hours Tracking** - Track 4 or 8 hour work sessions with automatic statistics
+- **📈 Statistics Dashboard** - View total hours, days, and months at a glance
 - **🗑️ Bulk Operations** - Select multiple logs and delete with safety confirmation
+- **✏️ Edit Logs** - Update your existing log entries
 - **🔍 Log Details** - View full log details in a beautiful modal popup
-- **📥 Excel Export** - Export your logs to Excel format instantly
+- **📥 Excel Export** - Export your logs to Excel format instantly (includes work links)
 - **🌐 Bilingual Support** - Thai and English language toggle
 - **📱 Fully Responsive** - Optimized for desktop, tablet, and mobile
 - **🎨 Premium UI** - Modern design with glassmorphism effects and smooth animations
@@ -100,10 +104,11 @@ intern-log/
 - Show/hide password toggle
 
 ### Dashboard
-- **New Entry Form** - Add date and description
+- **Statistics Summary** - View total hours, days (hours÷8), and months (days÷22)
+- **New Entry Form** - Add date, hours (4 or 8), description, and optional work link
 - **Recent Logs** - View all your logs in list or table format
-- **Search & Filter** - (Coming soon)
-- **Export to Excel** - Download logs as .xlsx file
+- **Work Links** - Clickable links displayed in log details
+- **Export to Excel** - Download logs as .xlsx file with all fields
 
 ### Security
 - User authentication required
@@ -135,7 +140,7 @@ service cloud.firestore {
 }
 ```
 
-For detailed deployment instructions, see the [Deployment Guide](/.github/deployment_guide.md).
+For detailed deployment instructions, see the [Deployment Guide](./DEPLOYMENT_GUIDE.md).
 
 ## 📝 Usage
 
