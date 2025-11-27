@@ -140,6 +140,14 @@ const translations: Record<string, Record<Language, string>> = {
     'total_internship_time': {
         'EN': 'Total Internship Time',
         'TH': 'เวลาฝึกงานทั้งหมด'
+    },
+    'work_link': {
+        'EN': 'Work Link (Optional)',
+        'TH': 'ลิงก์งาน (ไม่บังคับ)'
+    },
+    'view_work': {
+        'EN': 'View Work',
+        'TH': 'ดูผลงาน'
     }
 };
 

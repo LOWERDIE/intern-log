@@ -19,6 +19,7 @@ interface LogEntry {
   date: string;
   description: string;
   hours?: number;
+  workLink?: string;
   createdAt: any;
 }
 
@@ -29,6 +30,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [description, setDescription] = useState('');
+  const [workLink, setWorkLink] = useState('');
   const [hours, setHours] = useState(8);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [viewMode, setViewMode] = useState<'list' | 'table'>('list');
@@ -97,9 +99,11 @@ export default function Dashboard() {
         date,
         hours,
         description,
+        workLink,
         createdAt: Timestamp.now(),
       });
       setDescription('');
+      setWorkLink('');
       setHours(8); // Reset to default
       // Date stays the same for convenience
     } catch (error) {
@@ -115,6 +119,7 @@ export default function Dashboard() {
         date: updatedLog.date,
         hours: updatedLog.hours,
         description: updatedLog.description,
+        workLink: updatedLog.workLink,
       });
       setEditingLog(null);
     } catch (error) {
@@ -162,6 +167,7 @@ export default function Dashboard() {
       Date: log.date,
       Hours: log.hours || 8,
       Description: log.description,
+      Link: log.workLink || '',
     }));
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
@@ -262,6 +268,17 @@ export default function Dashboard() {
                           placeholder={t('placeholder_desc')}
                           className="w-full glass-input rounded-xl px-4 py-3 text-white h-40 resize-none"
                           required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">{t('work_link') || 'Work Link'}</label>
+                        <input
+                          type="url"
+                          value={workLink}
+                          onChange={(e) => setWorkLink(e.target.value)}
+                          placeholder="https://example.com"
+                          className="w-full glass-input rounded-xl px-4 py-3 text-white"
                         />
                       </div>
 
@@ -397,6 +414,22 @@ export default function Dashboard() {
                                 <p className="text-slate-300 whitespace-pre-wrap leading-relaxed text-sm md:text-base line-clamp-3">
                                   {log.description}
                                 </p>
+                                {log.workLink && (
+                                  <div className="mt-3">
+                                    <a
+                                      href={log.workLink}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1 hover:underline"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                      </svg>
+                                      {t('view_work') || 'View Work'}
+                                    </a>
+                                  </div>
+                                )}
                               </div>
                             );
                           })}

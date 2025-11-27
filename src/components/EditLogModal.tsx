@@ -8,6 +8,7 @@ interface LogEntry {
     date: string;
     description: string;
     hours?: number;
+    workLink?: string;
     createdAt: any;
 }
 
@@ -22,6 +23,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
     const { t } = useLanguage();
     const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
+    const [workLink, setWorkLink] = useState('');
     const [hours, setHours] = useState(8);
     const [isSaving, setIsSaving] = useState(false);
 
@@ -29,6 +31,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
         if (log) {
             setDate(log.date);
             setDescription(log.description);
+            setWorkLink(log.workLink || '');
             setHours(log.hours || 8);
         }
     }, [log]);
@@ -43,6 +46,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                 ...log,
                 date,
                 description,
+                workLink,
                 hours
             });
             onClose();
@@ -95,6 +99,17 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                             placeholder={t('placeholder_desc')}
                             className="w-full glass-input rounded-xl px-4 py-3 text-white h-40 resize-none"
                             required
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">{t('work_link') || 'Work Link'}</label>
+                        <input
+                            type="url"
+                            value={workLink}
+                            onChange={(e) => setWorkLink(e.target.value)}
+                            placeholder="https://example.com"
+                            className="w-full glass-input rounded-xl px-4 py-3 text-white"
                         />
                     </div>
 

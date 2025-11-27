@@ -6,6 +6,7 @@ interface LogEntry {
     id: string;
     date: string;
     description: string;
+    workLink?: string;
     createdAt: any;
 }
 

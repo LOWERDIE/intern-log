@@ -6,6 +6,7 @@ interface LogEntry {
     id: string;
     date: string;
     description: string;
+    workLink?: string;
     createdAt: any;
 }
 
@@ -55,8 +56,23 @@ export default function LogDetailsModal({ log, onClose, onEdit }: LogDetailsModa
                             {log.description}
                         </div>
                     </div>
+                    {log.workLink && (
+                        <div>
+                            <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">{t('work_link') || 'Work Link'}</label>
+                            <a
+                                href={log.workLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 text-lg flex items-center gap-2 hover:underline break-all"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 flex-shrink-0">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                </svg>
+                                {log.workLink}
+                            </a>
+                        </div>
+                    )}
                 </div>
-
                 <div className="mt-8 flex justify-end gap-3">
                     <button
                         onClick={() => onEdit(log)}
