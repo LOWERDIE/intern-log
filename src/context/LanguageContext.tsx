@@ -148,6 +148,14 @@ const translations: Record<string, Record<Language, string>> = {
     'view_work': {
         'EN': 'View Work',
         'TH': 'ดูผลงาน'
+    },
+    'custom': {
+        'EN': 'Custom',
+        'TH': 'กำหนดเอง'
+    },
+    'holiday_leave': {
+        'EN': 'Holiday / Leave',
+        'TH': 'วันหยุด / ลา'
     }
 };
 

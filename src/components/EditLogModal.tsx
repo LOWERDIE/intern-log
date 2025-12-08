@@ -25,6 +25,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
     const [description, setDescription] = useState('');
     const [workLink, setWorkLink] = useState('');
     const [hours, setHours] = useState(8);
+    const [isCustomHours, setIsCustomHours] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -32,7 +33,14 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
             setDate(log.date);
             setDescription(log.description);
             setWorkLink(log.workLink || '');
-            setHours(log.hours || 8);
+            const h = log.hours !== undefined ? log.hours : 8;
+            setHours(h);
+            // Check if hours is standard (8, 4, 0) or custom
+            if (h !== 8 && h !== 4 && h !== 0) {
+                setIsCustomHours(true);
+            } else {
+                setIsCustomHours(false);
+            }
         }
     }, [log]);
 
@@ -80,14 +88,38 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                         </div>
                         <div>
                             <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">{t('hours')}</label>
-                            <select
-                                value={hours}
-                                onChange={(e) => setHours(Number(e.target.value))}
-                                className="w-full glass-input rounded-xl px-5 py-3 text-white text-center appearance-none cursor-pointer"
-                            >
-                                <option value={8}>8 {t('hours_suffix')}</option>
-                                <option value={4}>4 {t('hours_suffix')}</option>
-                            </select>
+                            <div className="flex gap-2">
+                                <select
+                                    value={isCustomHours ? 'custom' : hours}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        if (val === 'custom') {
+                                            setIsCustomHours(true);
+                                            // Keep current hours if switching to custom, or default to 0? 
+                                            // Let's keep it if valid, else 0
+                                        } else {
+                                            setIsCustomHours(false);
+                                            setHours(Number(val));
+                                        }
+                                    }}
+                                    className="w-full glass-input rounded-xl px-5 py-3 text-white text-center appearance-none cursor-pointer"
+                                >
+                                    <option value={8}>8 {t('hours_suffix')}</option>
+                                    <option value={4}>4 {t('hours_suffix')}</option>
+                                    <option value={0}>{t('holiday_leave')}</option>
+                                    <option value="custom">{t('custom')}</option>
+                                </select>
+                                {isCustomHours && (
+                                    <input
+                                        type="number"
+                                        value={hours}
+                                        onChange={(e) => setHours(Number(e.target.value))}
+                                        className="w-24 glass-input rounded-xl px-2 py-3 text-white text-center"
+                                        step="0.5"
+                                        min="0"
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
 

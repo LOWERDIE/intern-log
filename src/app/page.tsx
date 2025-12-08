@@ -34,6 +34,7 @@ export default function Dashboard() {
   const [hours, setHours] = useState(8);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [viewMode, setViewMode] = useState<'list' | 'table'>('list');
+  const [isCustomHours, setIsCustomHours] = useState(false);
 
   // New State
   const [selectedLogs, setSelectedLogs] = useState<Set<string>>(new Set());
@@ -105,6 +106,7 @@ export default function Dashboard() {
       setDescription('');
       setWorkLink('');
       setHours(8); // Reset to default
+      setIsCustomHours(false);
       // Date stays the same for convenience
     } catch (error) {
       console.error("Error adding log:", error);
@@ -178,8 +180,8 @@ export default function Dashboard() {
   // Calculate stats
   // Calculate stats
   const totalHours = logs.reduce((acc, log) => {
-    // Default to 8 hours if missing or 0, assuming standard workday for old logs
-    const h = Number(log.hours) || 8;
+    // Respect 0 as a valid value for holidays/leave
+    const h = (log.hours !== undefined && log.hours !== null) ? Number(log.hours) : 8;
     return acc + h;
   }, 0);
   const totalDays = totalHours / 8;
@@ -248,14 +250,38 @@ export default function Dashboard() {
                         </div>
                         <div>
                           <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 ml-1">{t('hours')}</label>
-                          <select
-                            value={hours}
-                            onChange={(e) => setHours(Number(e.target.value))}
-                            className="w-full glass-input rounded-xl px-2 py-3.5 text-white text-center appearance-none cursor-pointer text-sm text-center"
-                          >
-                            <option value={8}>8 {t('hours_suffix')}</option>
-                            <option value={4}>4 {t('hours_suffix')}</option>
-                          </select>
+                          <div className="flex gap-2">
+                            <select
+                              value={isCustomHours ? 'custom' : hours}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                if (val === 'custom') {
+                                  setIsCustomHours(true);
+                                  setHours(0); // Reset or keep previous? Let's default to 0 for custom input
+                                } else {
+                                  setIsCustomHours(false);
+                                  setHours(Number(val));
+                                }
+                              }}
+                              className="w-full glass-input rounded-xl px-2 py-3.5 text-white text-center appearance-none cursor-pointer text-sm text-center"
+                            >
+                              <option value={8}>8 {t('hours_suffix')}</option>
+                              <option value={4}>4 {t('hours_suffix')}</option>
+                              <option value={0}>{t('holiday_leave')}</option>
+                              <option value="custom">{t('custom')}</option>
+                            </select>
+                            {isCustomHours && (
+                              <input
+                                type="number"
+                                value={hours === 0 ? '' : hours}
+                                onChange={(e) => setHours(Number(e.target.value))}
+                                placeholder="0"
+                                className="w-20 glass-input rounded-xl px-2 py-3.5 text-white text-center text-sm"
+                                min="0"
+                                step="0.5"
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
 
