@@ -13,8 +13,8 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
     const { language, toggleLanguage, t } = useLanguage();
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 glass-panel bg-[#0a0a0a]/60 backdrop-blur-xl border-b border-white/10 px-6 py-4">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
+        <nav className="fixed top-0 left-0 right-0 z-50 glass-panel bg-[var(--bg-secondary)]/90 backdrop-blur-xl border-b border-white/10 px-6 py-4 transition-colors duration-300">
+            <div className="max-w-7xl mx-auto flex justify-between items-center">
                 {/* Left Side: Title and Welcome Msg */}
                 <div>
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent uppercase tracking-wider">
@@ -35,6 +35,7 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
                     >
                         {language === 'TH' ? 'EN' : 'TH'}
                     </button>
+
                     <button
                         onClick={onLogout}
                         className="px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 hover:text-red-300 transition-all text-sm font-medium"
@@ -62,7 +63,7 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
 
                     {/* Dropdown Menu */}
                     {isOpen && (
-                        <div className="absolute right-0 top-full mt-6 w-48 glass-panel bg-[#0a0a0a]/90 backdrop-blur-xl rounded-xl shadow-xl overflow-hidden animate-fade-in border border-white/10">
+                        <div className="absolute right-0 top-full mt-6 w-48 glass-panel bg-[var(--bg-secondary)]/95 backdrop-blur-xl rounded-xl shadow-xl overflow-hidden animate-fade-in border border-white/10">
                             <div className="p-2 space-y-1">
                                 <button
                                     onClick={() => {
@@ -76,6 +77,7 @@ export default function Navbar({ userEmail, onLogout }: NavbarProps) {
                                     </span>
                                     Switch Language
                                 </button>
+
                                 <button
                                     onClick={() => {
                                         setIsOpen(false);

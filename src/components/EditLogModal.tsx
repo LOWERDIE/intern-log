@@ -67,7 +67,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-            <div className="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
+            <div className="glass-panel w-full max-w-lg rounded-3xl p-6 md:p-8 relative animate-scale-in bg-[var(--bg-secondary)]/95" onClick={(e) => e.stopPropagation()}>
 
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
                     <span className="w-1 h-8 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-full"></span>
@@ -102,7 +102,8 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                                             setHours(Number(val));
                                         }
                                     }}
-                                    className="w-full glass-input rounded-xl px-5 py-3 text-white text-center appearance-none cursor-pointer"
+
+                                    className="w-full glass-input rounded-xl px-5 py-3 text-white text-center appearance-none cursor-pointer bg-[var(--bg-secondary)]"
                                 >
                                     <option value={8}>8 {t('hours_suffix')}</option>
                                     <option value={4}>4 {t('hours_suffix')}</option>
@@ -114,7 +115,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                                         type="number"
                                         value={hours}
                                         onChange={(e) => setHours(Number(e.target.value))}
-                                        className="w-24 glass-input rounded-xl px-2 py-3 text-white text-center"
+                                        className="w-full max-w-[100px] glass-input rounded-xl px-2 py-3 text-white text-center"
                                         step="0.5"
                                         min="0"
                                     />
@@ -163,7 +164,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

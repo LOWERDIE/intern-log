@@ -7,6 +7,7 @@ interface LogEntry {
     date: string;
     description: string;
     workLink?: string;
+    hours?: number;
     createdAt: any;
 }
 
@@ -75,8 +76,13 @@ export default function LogTable({ logs, selectedIds, onToggleSelect, onSelectAl
                                             day: 'numeric',
                                             weekday: 'short'
                                         })}
+                                        {log.hours === 0 && (
+                                            <span className="ml-2 inline-flex items-center gap-1 text-xs font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
+                                                {t('holiday_leave')}
+                                            </span>
+                                        )}
                                     </td>
-                                    <td className="p-4 text-slate-300 whitespace-pre-wrap min-w-[300px] line-clamp-2">
+                                    <td className={`p-4 whitespace-pre-wrap min-w-[300px] line-clamp-2 ${log.hours === 0 ? 'text-red-300' : 'text-slate-300'}`}>
                                         {log.description.length > 100 ? log.description.substring(0, 100) + '...' : log.description}
                                     </td>
                                 </tr>

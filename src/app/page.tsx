@@ -263,7 +263,7 @@ export default function Dashboard() {
                                   setHours(Number(val));
                                 }
                               }}
-                              className="w-full glass-input rounded-xl px-2 py-3.5 text-white text-center appearance-none cursor-pointer text-sm text-center"
+                              className="w-full glass-input rounded-xl px-2 py-3.5 text-white text-center appearance-none cursor-pointer text-sm text-center bg-[var(--bg-secondary)]"
                             >
                               <option value={8}>8 {t('hours_suffix')}</option>
                               <option value={4}>4 {t('hours_suffix')}</option>
@@ -276,7 +276,7 @@ export default function Dashboard() {
                                 value={hours === 0 ? '' : hours}
                                 onChange={(e) => setHours(Number(e.target.value))}
                                 placeholder="0"
-                                className="w-20 glass-input rounded-xl px-2 py-3.5 text-white text-center text-sm"
+                                className="w-full max-w-[80px] glass-input rounded-xl px-2 py-3.5 text-white text-center text-sm"
                                 min="0"
                                 step="0.5"
                               />
@@ -338,7 +338,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Unified Header Panel */}
-                  <div className="glass-panel p-4 md:p-6 rounded-3xl mb-6 flex flex-row justify-between items-center gap-2 md:gap-4 sticky top-24 z-20 backdrop-blur-xl bg-[#0a0a0a]/60 border border-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5">
+                  <div className="glass-panel p-4 md:p-6 rounded-3xl mb-6 flex flex-row justify-between items-center gap-2 md:gap-4 sticky top-24 z-20 backdrop-blur-xl bg-[var(--bg-secondary)]/80 border border-white/10 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5">
                     <div className="flex items-center gap-3 md:gap-4">
                       <h2 className="text-lg md:text-xl font-bold flex items-center gap-2 md:gap-3 whitespace-nowrap">
                         <span className="w-1 h-6 md:h-8 bg-gradient-to-b from-emerald-400 to-cyan-500 rounded-full shadow-[0_0_15px_rgba(52,211,153,0.5)]"></span>
@@ -436,26 +436,40 @@ export default function Dashboard() {
                                   <span className="text-xs font-bold text-blue-300 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 group-hover:border-blue-500/40 transition-colors">
                                     {new Date(log.date).toLocaleDateString('th-TH', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' })}
                                   </span>
+                                  {log.hours === 0 ? (
+                                    <span className="flex items-center gap-1 text-xs font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                      </svg>
+                                      {t('holiday_leave')}
+                                    </span>
+                                  ) : (
+                                    <span className="text-xs font-bold text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 mr-8">
+                                      {log.hours !== undefined ? log.hours : 8} {t('hours_suffix')}
+                                    </span>
+                                  )}
                                 </div>
                                 <p className="text-slate-300 whitespace-pre-wrap leading-relaxed text-sm md:text-base line-clamp-3">
                                   {log.description}
                                 </p>
-                                {log.workLink && (
-                                  <div className="mt-3">
-                                    <a
-                                      href={log.workLink}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1 hover:underline"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-                                      </svg>
-                                      {t('view_work') || 'View Work'}
-                                    </a>
-                                  </div>
-                                )}
+                                {
+                                  log.workLink && (
+                                    <div className="mt-3">
+                                      <a
+                                        href={log.workLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1 hover:underline"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                        </svg>
+                                        {t('view_work') || 'View Work'}
+                                      </a>
+                                    </div>
+                                  )
+                                }
                               </div>
                             );
                           })}
@@ -477,6 +491,6 @@ export default function Dashboard() {
           </>
         )}
       </div>
-    </div>
+    </div >
   );
 }

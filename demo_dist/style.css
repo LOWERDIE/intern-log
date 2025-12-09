@@ -1,0 +1,203 @@
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-thai: 'Noto Sans Thai', sans-serif;
+
+  /* Default (Dark) Theme */
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-input-bg: rgba(255, 255, 255, 0.05);
+  --glass-input-border: rgba(255, 255, 255, 0.1);
+  --accent-primary: #3b82f6;
+  --accent-secondary: #8b5cf6;
+}
+
+[data-theme='blue'] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #eff6ff;
+  --text-secondary: #cbd5e1;
+  --glass-bg: rgba(30, 41, 59, 0.4);
+  --glass-border: rgba(148, 163, 184, 0.1);
+  --glass-input-bg: rgba(15, 23, 42, 0.5);
+  --glass-input-border: rgba(148, 163, 184, 0.2);
+  --accent-primary: #60a5fa;
+  --accent-secondary: #3b82f6;
+}
+
+[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(203, 213, 225, 0.5);
+  --glass-input-bg: #ffffff;
+  --glass-input-border: #cbd5e1;
+  --accent-primary: #2563eb;
+  --accent-secondary: #4f46e5;
+}
+
+body {
+  font-family: var(--font-inter);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+body.lang-th {
+  font-family: var(--font-thai);
+}
+
+/* Animated Background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 50%, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+.animated-bg::before,
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  width: 100vmax;
+  height: 100vmax;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--accent-primary), transparent 60%);
+  opacity: 0.1;
+  animation: move 15s infinite linear;
+}
+
+.animated-bg::after {
+  background: radial-gradient(circle, var(--accent-secondary), transparent 60%);
+  animation: move 20s infinite linear reverse;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+  }
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-input {
+  background: var(--glass-input-bg);
+  border: 1px solid var(--glass-input-border);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: var(--glass-input-bg);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+  outline: none;
+}
+
+/* Nav Background Fix */
+.nav-bg {
+  background: var(--bg-secondary);
+  opacity: 0.9;
+}
+
+/* Dropdown */
+.dropdown-bg {
+  background-color: var(--bg-secondary);
+}
+
+/* Modern Button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+  color: white;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Fix Date Input Icon */
+[data-theme='light'] ::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+/* Modal */
+.modal-active {
+  display: flex !important;
+  opacity: 1 !important;
+}
+
+.modal-content-active {
+  transform: scale(1) !important;
+}
