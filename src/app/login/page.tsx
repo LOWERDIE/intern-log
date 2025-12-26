@@ -28,17 +28,15 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex relative overflow-hidden bg-black">
+        <div className="min-h-screen w-full flex relative overflow-hidden bg-[var(--bg-primary)]">
             {/* Animated Background Elements */}
-            <div className="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-blue-600/20 rounded-full blur-[120px] animate-pulse"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] bg-purple-600/20 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+            <div className="animated-bg"></div>
 
-            {/* Left Side - Branding (Hidden on Mobile) */}
-            <div className="hidden lg:flex w-1/2 relative z-10 flex-col justify-center px-20 text-white">
+            {/* Left Side - Branding */}
+            <div className="hidden lg:flex w-1/2 relative z-10 flex-col justify-center px-20">
                 <div className="glass-panel p-12 rounded-[3rem] border-white/5 bg-white/5 backdrop-blur-2xl relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-
-                    <h1 className="text-6xl font-bold mb-6 leading-tight">
+                    {/* ... content ... */}
+                    <h1 className="text-5xl font-bold mb-6 text-white leading-tight">
                         Capture Your <br />
                         <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                             Internship Journey
@@ -59,12 +57,12 @@ export default function LoginPage() {
             {/* Right Side - Login Form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-6 relative z-10">
                 <div className="w-full max-w-md">
-                    <div className="glass-panel p-8 md:p-12 rounded-3xl border-white/10 shadow-2xl backdrop-blur-xl bg-black/40">
+                    <div className="glass-panel p-8 md:p-12 rounded-3xl border-white/10 shadow-2xl backdrop-blur-xl bg-[var(--bg-secondary)]/80">
                         <div className="text-center mb-10">
                             <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
                             <p className="text-slate-400">Please sign in to your account</p>
                         </div>
-
+                        {/* ... form ... */}
                         {error && (
                             <div className="bg-red-500/10 border border-red-500/20 text-red-200 p-4 rounded-xl mb-6 text-sm flex items-center gap-3 animate-fade-in">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 shrink-0">
@@ -87,7 +85,7 @@ export default function LoginPage() {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full glass-input rounded-xl pl-12 pr-5 py-4 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
+                                        className="w-full glass-input rounded-xl pl-12 pr-5 py-4 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500/50 transition-all bg-white/5 border-white/10"
                                         placeholder="name@example.com"
                                         required
                                     />
@@ -106,7 +104,7 @@ export default function LoginPage() {
                                         type={showPassword ? "text" : "password"}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full glass-input rounded-xl pl-12 pr-12 py-4 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500/50 transition-all"
+                                        className="w-full glass-input rounded-xl pl-12 pr-12 py-4 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500/50 transition-all bg-white/5 border-white/10"
                                         placeholder="••••••••"
                                         required
                                     />
@@ -132,7 +130,7 @@ export default function LoginPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`w-full py-4 btn-primary text-white font-bold rounded-xl shadow-lg mt-6 tracking-wide text-lg flex items-center justify-center gap-2 ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02]'}`}
+                                className={`w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg mt-6 tracking-wide text-lg flex items-center justify-center gap-2 transition-all duration-300 ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02] hover:shadow-blue-500/20'}`}
                             >
                                 {loading ? (
                                     <>

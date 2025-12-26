@@ -1,45 +1,24 @@
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import CustomDatePicker from './CustomDatePicker';
 
-interface LogEntry {
-    id: string;
-    date: string;
-    description: string;
-    hours?: number;
-    workLink?: string;
-    createdAt: any;
-}
-
-interface EditLogModalProps {
-    log: LogEntry | null;
+interface AddLogModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSave: (updatedLog: LogEntry) => Promise<void>;
+    onSave: (data: { date: string; description: string; workLink: string; hours: number }) => Promise<void>;
 }
 
-export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogModalProps) {
+export default function AddLogModal({ isOpen, onClose, onSave }: AddLogModalProps) {
     const { t } = useLanguage();
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [status, setStatus] = useState<'work' | 'holiday'>('work');
     const [description, setDescription] = useState('');
     const [workLink, setWorkLink] = useState('');
     const [hours, setHours] = useState(8);
     const [isSaving, setIsSaving] = useState(false);
 
-    useEffect(() => {
-        if (log) {
-            setDate(log.date);
-            setDescription(log.description);
-            setWorkLink(log.workLink || '');
-            const h = log.hours !== undefined ? log.hours : 8;
-            setHours(h);
-            const isHoliday = h === 0;
-            setStatus(isHoliday ? 'holiday' : 'work');
-        }
-    }, [log]);
-
-    if (!isOpen || !log) return null;
+    if (!isOpen) return null;
 
     const handleStatusChange = (newStatus: 'work' | 'holiday') => {
         setStatus(newStatus);
@@ -55,15 +34,19 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
         setIsSaving(true);
         try {
             await onSave({
-                ...log,
                 date,
                 description,
                 workLink,
                 hours
             });
+            // Reset form
+            setDescription('');
+            setWorkLink('');
+            setHours(8);
+            setStatus('work');
             onClose();
         } catch (error) {
-            console.error("Failed to update log", error);
+            console.error("Failed to add log", error);
         } finally {
             setIsSaving(false);
         }
@@ -76,7 +59,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold text-white">
-                        {t('edit_entry') || 'Edit Entry'}
+                        {t('new_entry') || 'New Entry'}
                     </h2>
                     <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -169,7 +152,7 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                             className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg shadow-lg shadow-blue-500/20 transition-all disabled:opacity-50"
                             disabled={isSaving}
                         >
-                            {isSaving ? 'Saving...' : (t('save_changes') || 'Save Changes')}
+                            {isSaving ? 'Saving...' : (t('save_entry') || 'Save')}
                         </button>
                     </div>
                 </form>

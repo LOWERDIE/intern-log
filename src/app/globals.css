@@ -4,8 +4,9 @@
 
 :root {
   /* Base variables */
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
+  /* Base variables - Dark Blue Theme */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
   --glass-bg: rgba(255, 255, 255, 0.03);
@@ -20,8 +21,8 @@
 
 [data-theme='dark'],
 body[data-theme='dark'] {
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
   --glass-bg: rgba(255, 255, 255, 0.03);
@@ -237,7 +238,7 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000000 100%);
+  background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
   overflow: hidden;
 }
 

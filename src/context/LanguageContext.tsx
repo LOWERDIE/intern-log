@@ -135,7 +135,27 @@ const translations: Record<string, Record<Language, string>> = {
     },
     'months': {
         'EN': 'Months',
+        'TH': 'จำนวนเดือน'
+    },
+    'total_hours': {
+        'EN': 'Total Hours',
+        'TH': 'ชั่วโมงทั้งหมด'
+    },
+    'work_days': {
+        'EN': 'Work Days',
+        'TH': 'วันทำงาน'
+    },
+    'days_off': {
+        'EN': 'Days Off',
+        'TH': 'วันหยุด/ลา'
+    },
+    'months_suffix': {
+        'EN': 'months',
         'TH': 'เดือน'
+    },
+    'days_suffix': {
+        'EN': 'days',
+        'TH': 'วัน'
     },
     'total_internship_time': {
         'EN': 'Total Internship Time',
@@ -156,6 +176,22 @@ const translations: Record<string, Record<Language, string>> = {
     'holiday_leave': {
         'EN': 'Holiday / Leave',
         'TH': 'วันหยุด / ลา'
+    },
+    'status': {
+        'EN': 'Status',
+        'TH': 'สถานะ'
+    },
+    'status_work': {
+        'EN': 'Work',
+        'TH': 'ทำงาน'
+    },
+    'status_holiday': {
+        'EN': 'Holiday / Leave',
+        'TH': 'วันหยุด / ลา'
+    },
+    'work_description': {
+        'EN': 'Work Description',
+        'TH': 'รายละเอียดงาน'
     }
 };
 
