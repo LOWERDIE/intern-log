@@ -39,8 +39,6 @@ export default function AddLogModal({ isOpen, onClose, onSave }: AddLogModalProp
                 date,
                 description,
                 workLink,
-                description,
-                workLink,
                 hours: Number(hours) || 0
             });
             // Reset form

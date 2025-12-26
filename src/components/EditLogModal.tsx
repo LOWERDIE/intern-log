@@ -61,7 +61,6 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                 date,
                 description,
                 workLink,
-                workLink,
                 hours: Number(hours) || 0
             });
             onClose();
