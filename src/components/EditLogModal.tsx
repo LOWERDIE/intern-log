@@ -22,9 +22,11 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
     const { t } = useLanguage();
     const [date, setDate] = useState('');
     const [status, setStatus] = useState<'work' | 'holiday'>('work');
+    const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
     const [description, setDescription] = useState('');
     const [workLink, setWorkLink] = useState('');
-    const [hours, setHours] = useState(8);
+    const [hours, setHours] = useState<number | string>(8);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -59,7 +61,8 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                 date,
                 description,
                 workLink,
-                hours
+                workLink,
+                hours: Number(hours) || 0
             });
             onClose();
         } catch (error) {
@@ -100,34 +103,109 @@ export default function EditLogModal({ log, isOpen, onClose, onSave }: EditLogMo
                     <div>
                         <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('status') || 'Status'}</label>
                         <div className="relative">
-                            <select
-                                value={status}
-                                onChange={(e) => handleStatusChange(e.target.value as 'work' | 'holiday')}
-                                className="w-full bg-[#1e293b] border border-slate-700 rounded-lg px-4 py-2.5 text-white appearance-none focus:outline-none focus:border-blue-500 transition-colors cursor-pointer"
+                            <button
+                                type="button"
+                                onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}
+                                className="w-full bg-[#1e293b] border border-slate-700 rounded-lg px-4 py-2.5 text-white text-left focus:outline-none focus:border-blue-500 transition-colors flex justify-between items-center"
                             >
-                                <option value="work">💼 {t('status_work') || 'Work'}</option>
-                                <option value="holiday">✈️ {t('status_holiday') || 'Holiday / Leave'}</option>
-                            </select>
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <span>
+                                    {status === 'work' ? `💼 ${t('status_work') || 'Work'}` : `✈️ ${t('status_holiday') || 'Holiday / Leave'}`}
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`w-4 h-4 text-slate-400 transition-transform ${isStatusDropdownOpen ? 'rotate-180' : ''}`}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                 </svg>
-                            </div>
+                            </button>
+
+                            {isStatusDropdownOpen && (
+                                <>
+                                    <div className="fixed inset-0 z-10" onClick={() => setIsStatusDropdownOpen(false)}></div>
+                                    <div className="absolute top-full left-0 right-0 mt-1 bg-[#1e293b] border border-slate-700 rounded-lg shadow-xl z-20 overflow-hidden animate-fade-in">
+                                        <button
+                                            type="button"
+                                            className="w-full text-left px-4 py-2.5 text-white hover:bg-slate-700/50 transition-colors flex items-center gap-2"
+                                            onClick={() => {
+                                                handleStatusChange('work');
+                                                setIsStatusDropdownOpen(false);
+                                            }}
+                                        >
+                                            <span>💼</span>
+                                            <span>{t('status_work') || 'Work'}</span>
+                                        </button>
+                                        <div className="h-px bg-slate-700/50 my-0"></div>
+                                        <button
+                                            type="button"
+                                            className="w-full text-left px-4 py-2.5 text-white hover:bg-slate-700/50 transition-colors flex items-center gap-2"
+                                            onClick={() => {
+                                                handleStatusChange('holiday');
+                                                setIsStatusDropdownOpen(false);
+                                            }}
+                                        >
+                                            <span>✈️</span>
+                                            <span>{t('status_holiday') || 'Holiday / Leave'}</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
 
                     {/* Hours */}
                     <div>
                         <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('hours') || 'Hours'}</label>
-                        <input
-                            type="number"
-                            value={hours}
-                            onChange={(e) => setHours(Number(e.target.value))}
-                            className="w-full bg-[#1e293b] border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition-colors"
-                            step="0.5"
-                            min="0"
-                            disabled={status === 'holiday'}
-                        />
+                        <div className="relative">
+                            <input
+                                type="number"
+                                value={hours}
+                                onChange={(e) => setHours(e.target.value)}
+                                className="w-full bg-[#1e293b] border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-blue-500 transition-colors no-spinner"
+                                step="any"
+                                min="0"
+                                disabled={status === 'holiday'}
+                                onFocus={() => !isDropdownOpen && setIsDropdownOpen(true)}
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="absolute right-0 top-0 h-full px-4 text-slate-400 hover:text-white transition-colors"
+                                disabled={status === 'holiday'}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </button>
+
+                            {isDropdownOpen && (
+                                <>
+                                    <div className="fixed inset-0 z-10" onClick={() => setIsDropdownOpen(false)}></div>
+                                    <div className="absolute top-full left-0 right-0 mt-1 bg-[#1e293b] border border-slate-700 rounded-lg shadow-xl z-20 overflow-hidden animate-fade-in">
+                                        <button
+                                            type="button"
+                                            className="w-full text-left px-4 py-2.5 text-white hover:bg-slate-700/50 transition-colors flex items-center justify-between group"
+                                            onClick={() => {
+                                                setHours(8);
+                                                setIsDropdownOpen(false);
+                                            }}
+                                        >
+                                            <span>{t('hours_suffix') ? `8 ${t('hours_suffix')}` : '8 Hours'}</span>
+                                            <span className="text-xs text-slate-500 group-hover:text-slate-300">Default</span>
+                                        </button>
+                                        <div className="h-px bg-slate-700/50 my-0"></div>
+                                        <button
+                                            type="button"
+                                            className="w-full text-left px-4 py-2.5 text-white hover:bg-slate-700/50 transition-colors flex items-center justify-between group"
+                                            onClick={() => {
+                                                setHours(4);
+                                                setIsDropdownOpen(false);
+                                            }}
+                                        >
+                                            <span>{t('hours_suffix') ? `4 ${t('hours_suffix')}` : '4 Hours'}</span>
+                                            <span className="text-xs text-slate-500 group-hover:text-slate-300">Half Day</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
                     </div>
 
                     {/* Description */}

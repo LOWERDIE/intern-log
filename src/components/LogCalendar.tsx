@@ -95,20 +95,41 @@ const LogCalendar: React.FC<LogCalendarProps> = ({ logs, onView }) => {
                 <div className="grid grid-cols-7 gap-2">
                     {generateCalendarDays().map((item, index) => {
                         const log = item.type === 'current' ? calendarLogs(item.day) : null;
+
+                        let bgClass = '';
+                        let textClass = '';
+                        let dotClass = '';
+
+                        if (log) {
+                            if (log.hours === 0) {
+                                bgClass = 'bg-red-500/10';
+                                textClass = 'text-red-500';
+                                dotClass = 'bg-red-500';
+                            } else if ((log.hours || 0) < 5) {
+                                bgClass = 'bg-yellow-500/10';
+                                textClass = 'text-yellow-500';
+                                dotClass = 'bg-yellow-500';
+                            } else {
+                                bgClass = 'bg-blue-500/10';
+                                textClass = 'text-blue-500';
+                                dotClass = 'bg-blue-500';
+                            }
+                        }
+
                         return (
                             <div
                                 key={index}
                                 className={`
-                                    h-12 rounded-xl flex items-center justify-center text-sm font-medium relative group cursor-pointer
+                                    h-12 rounded-xl flex items-center justify-center text-sm font-medium relative group cursor-pointer transition-colors
                                     ${item.type === 'current' ? 'text-white hover:bg-white/5' : 'text-slate-600'}
-                                    ${log ? (log.hours === 0 ? 'bg-red-500/10 text-red-400' : 'bg-blue-500/10 text-blue-400') : ''}
+                                    ${bgClass} ${textClass}
                                     ${item.day === new Date().getDate() && item.type === 'current' && new Date().getMonth() === currentDate.getMonth() ? 'border border-blue-500' : ''}
                                 `}
                                 onClick={() => log && onView(log)}
                             >
                                 {item.day}
                                 {log && (
-                                    <div className={`absolute bottom-1 w-1.5 h-1.5 rounded-full ${log.hours === 0 ? 'bg-red-500' : 'bg-blue-500'}`}></div>
+                                    <div className={`absolute bottom-1 w-1.5 h-1.5 rounded-full ${dotClass}`}></div>
                                 )}
                             </div>
                         );
@@ -120,10 +141,10 @@ const LogCalendar: React.FC<LogCalendarProps> = ({ logs, onView }) => {
                         <div className="w-2 h-2 rounded-full bg-blue-500"></div> Work
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-500"></div> Holiday
+                        <div className="w-2 h-2 rounded-full bg-yellow-500"></div> &lt; 5 Hrs
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-green-500"></div> Leave
+                        <div className="w-2 h-2 rounded-full bg-red-500"></div> Holiday
                     </div>
                 </div>
             </div>

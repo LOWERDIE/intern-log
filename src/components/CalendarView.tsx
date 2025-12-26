@@ -89,7 +89,12 @@ export default function CalendarView({ logs, onViewLog }: CalendarViewProps) {
                                     <div
                                         key={log.id}
                                         onClick={() => onViewLog(log)}
-                                        className={`w-2 h-2 rounded-full cursor-pointer ${log.hours === 0 ? 'bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.5)]' : 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]'}`}
+                                        className={`w-2 h-2 rounded-full cursor-pointer ${log.hours === 0
+                                                ? 'bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.5)]'
+                                                : (log.hours || 0) < 5
+                                                    ? 'bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]'
+                                                    : 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.5)]'
+                                            }`}
                                         title={`${log.hours} hrs: ${log.description}`}
                                     />
                                 ))}
@@ -100,7 +105,12 @@ export default function CalendarView({ logs, onViewLog }: CalendarViewProps) {
                     {/* Tooltip / Preview for first log */}
                     {dayLogs.length > 0 && (
                         <div className="mt-2 text-xs truncate cursor-pointer" onClick={() => onViewLog(dayLogs[0])}>
-                            <div className={`px-1.5 py-0.5 rounded border ${dayLogs[0].hours === 0 ? 'bg-red-500/10 border-red-500/20 text-red-300' : 'bg-blue-500/10 border-blue-500/20 text-blue-300'} truncate`}>
+                            <div className={`px-1.5 py-0.5 rounded border ${dayLogs[0].hours === 0
+                                    ? 'bg-red-500/10 border-red-500/20 text-red-300'
+                                    : (dayLogs[0].hours || 0) < 5
+                                        ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300'
+                                        : 'bg-blue-500/10 border-blue-500/20 text-blue-300'
+                                } truncate`}>
                                 {dayLogs[0].hours === 0 ? t('holiday_leave') : `${dayLogs[0].hours} h`}
                             </div>
                             <div className="text-slate-500 mt-1 truncate hidden md:block select-none">
